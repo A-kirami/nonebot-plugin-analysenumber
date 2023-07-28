@@ -26,14 +26,14 @@ async def num_{num}() -> None:
 
 digit = ("个", "十", "百", "千", "万", "十万", "百万", "千万", "亿", "十亿")
 
-codes = [head]
-for i in range(1, 100000):
-    num_str = str(i)
-    num_len = len(num_str)
-    inv_num = num_str[::-1]
-    texts = [f"是{num_len}位数"]
-    texts.extend(f"{digit[i]}位是{inv_num[i]}" for i in range(num_len))
-    texts.append(f"倒过来是: {inv_num}")
-    codes.append(template.format(num=num_str, msg="\\n".join(texts)))
-
-code_path.write_text("\n".join(codes), encoding="utf-8")
+with open(code_path, "w", encoding="utf-8") as f:
+    f.write(head)
+    f.write("\n")
+    for i in range(1, 100000):
+        num_str = str(i)
+        num_len = len(num_str)
+        inv_num = num_str[::-1]
+        texts = [f"是{num_len}位数"]
+        texts.extend(f"{digit[i]}位是{inv_num[i]}" for i in range(num_len))
+        texts.append(f"倒过来是: {inv_num}")
+        f.write(template.format(num=num_str, msg="\\n".join(texts)))
